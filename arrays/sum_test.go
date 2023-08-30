@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestSum(t *testing.T) {
 	t.Run("collection of any size", func(t *testing.T) {
@@ -17,10 +20,11 @@ func TestSum(t *testing.T) {
 }
 
 func TestSumAll(t *testing.T) {
-	got := SumAll([]int{1, 2})
+
+	got := SumAll([]int{1, 2}, []int{0, 9})
 	want := []int{3, 9}
 
-	if got != want {
+	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got %v want %v", got, want)
 	}
 }
