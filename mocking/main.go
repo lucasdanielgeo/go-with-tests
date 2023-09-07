@@ -16,10 +16,13 @@ type Sleeper interface {
 	Sleep()
 }
 
-type DefaultSleeper struct{}
+type ConfigurableSleeper struct {
+	duration time.Duration
+	sleep    func(time.Duration)
+}
 
-func (d *DefaultSleeper) Sleep() {
-	time.Sleep(1 * time.Second)
+func (c *ConfigurableSleeper) Sleep() {
+	c.sleep(c.duration)
 }
 
 // Count down from 3, prnting the numbers and print Go! at the end
@@ -34,6 +37,10 @@ func Countdown(out io.Writer, sleeper Sleeper) {
 }
 
 func main() {
-	defaultSleeper := &DefaultSleeper{}
-	Countdown(os.Stdout, defaultSleeper)
+	sleeper := &ConfigurableSleeper{
+		duration: time.Second,
+		sleep:    time.Sleep,
+	}
+
+	Countdown(os.Stdout, sleeper)
 }
