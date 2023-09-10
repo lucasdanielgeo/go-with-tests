@@ -14,9 +14,7 @@ func TestWalk(t *testing.T) {
 	}{expected}
 
 	walk(x, func(input string) {
-		fmt.Print(&got)
 		got = append(got, input)
-		fmt.Print(&got)
 	})
 
 	if len(got) != 1 {
